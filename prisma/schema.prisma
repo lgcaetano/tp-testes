@@ -13,20 +13,23 @@ datasource db {
 model PhysicalPerson {
   id String @id @default(uuid())
   createdAt DateTime @default(now())
-  updatedAt DateTime
-  email String
+  updatedAt DateTime @updatedAt
+
+  email String @unique
   hash String
   fullName String
-  name String
   cpf String
   phone String
   address String
+
+  Bookmark Bookmark[]
 }
 
 model JudicialPerson {
   id String @id @default(uuid())
   createdAt DateTime @default(now())
-  updatedAt DateTime
+  updatedAt DateTime @updatedAt
+
   email String
   hash String
   socialReason String
@@ -37,6 +40,9 @@ model JudicialPerson {
 
 model Bank {
   id String @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   CIPCpf String
   CIPPassword String
 }
@@ -44,10 +50,13 @@ model Bank {
 model Bookmark {
   id String @id @default(uuid())
   createdAt DateTime @default(now())
-  updatedAt DateTime
+  updatedAt DateTime @updatedAt
+  
   title String
   description String?
   link String
+  userId String
+  user PhysicalPerson @relation(fields: [userId], references: [id])
 }
 
-
+  
